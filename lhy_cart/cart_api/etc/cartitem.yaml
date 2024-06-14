@@ -1,0 +1,38 @@
+Name: item
+Host: 0.0.0.0
+Port: 20022
+Mysql:
+  DataSource: root:112304@tcp(127.0.0.1:3306)/seckill_db?charset=utf8mb4&parseTime=True&loc=Local
+Auth:
+  AccessSecret: wmlhy15723351559
+  AccessExpire: 7200
+Log:
+  Stat: false
+  Encoding: plain
+  TimeFormat:  "2006-01-02 15:04:05"
+Redis:
+  Addr: 127.0.0.1:6379
+  Password:
+  DB: 0
+Etcd: 127.0.0.1:2379
+CartRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: cartrpc.rpc
+OrderRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: orderrpc.rpc
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4002
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: cart-api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger

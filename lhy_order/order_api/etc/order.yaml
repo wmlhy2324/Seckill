@@ -1,0 +1,42 @@
+Name: order
+Host: 0.0.0.0
+Port: 20023
+Mysql:
+  DataSource: root:112304@tcp(127.0.0.1:3306)/seckill_db?charset=utf8mb4&parseTime=True&loc=Local
+Log:
+  Stat: false
+  Encoding: plain
+  TimeFormat:  "2006-01-02 15:04:05"
+Redis:
+  Addr: 127.0.0.1:6379
+  Password:
+  DB: 0
+Etcd: 127.0.0.1:2379
+Auth:
+  AccessSecret: wmlhy15723351559
+  AccessExpire: 7200
+OrderRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: orderrpc.rpc
+StockRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: stockrpc.rpc
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4004
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: order-api
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+MicroService:
+  Driver: 'dtm-driver-gozero' # 配置dtm使用go-zero的微服务协议
+  Target: 'etcd://localhost:2379/dtmservice' # 把dtm注册到etcd的这个地址
+  EndPoint: 'localhost:36790' # dtm的本地地址

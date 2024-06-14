@@ -1,0 +1,30 @@
+Name: paymentrpc.rpc
+ListenOn: 0.0.0.0:8085
+Etcd:
+  Hosts:
+  - 127.0.0.1:2379
+  Key: paymentrpc.rpc
+Mysql:
+  DataSource: root:112304@tcp(127.0.0.1:3306)/seckill_db?charset=utf8mb4&parseTime=True&loc=Local
+  #跟api一样导入日志#
+Log:
+  Stat: false
+  Encoding: plain
+  TimeFormat:  "2006-01-02 15:04:05"
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4007
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: payment-rpc
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+Redis:
+  Host: 127.0.0.1
+  Addr: 127.0.0.1:6379
+  Password:
+  DB: 0
+  Key: paymentrpc.rpc

@@ -1,0 +1,73 @@
+syntax = "v1"
+
+info (
+	title:   "type title here"
+	desc:    "type desc here"
+	author:  "type author here"
+	email:   "type email here"
+	version: "type version here"
+)
+
+type CreateItemRequest {
+	ItemName    string  `json:"itemName"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+	Stock       int     `json:"stock"`
+	Token       string  `header:"token"`
+	Type        int     `json:"type"` //0为普通商品，1为秒杀商品
+}
+
+type CreateItemResponse {
+	ItemName    string  `json:"itemName"`
+	Description string  `json:"description"`
+	Price       float64 `json:"price"`
+}
+
+type GetItemListResponse {
+	Data []byte `json:"data"`
+}
+
+type DeleteItemRequest {
+	ItemName string `json:"itemName"`
+	Token    string `json:"token"`
+}
+
+type DeleteItemResponse {
+	ItemName string `json:"itemName"`
+	Msg      string `json:"msg"`
+}
+
+type CreateCartRequest {
+	ItemName string `json:"itemName"`
+	Num      int    `json:"num"`
+	Token    string `header:"token"`
+}
+
+type CreateCartResponse {
+	Msg string `json:"msg"`
+}
+
+type GetCartListRequest {
+	Token string `header:"token"`
+}
+
+type GetCartListResponse {
+	Data []byte `json:"data"`
+}
+service CartItem {
+	@handler item
+	post /api/item (CreateItemRequest) returns (CreateItemResponse)
+
+	@handler getItems
+	get /api/item (string) returns (GetItemListResponse)
+
+	@handler deleteItem
+	delete /api/item (DeleteItemRequest) returns (DeleteItemResponse)
+
+	@handler cart
+	post /api/item/cart (CreateCartRequest) returns (CreateCartResponse)
+
+	@handler getCart
+	get /api/item/cart (GetCartListRequest) returns (GetCartListResponse)
+} //goctl api go -api cart_api.api -dir . --home ../../template
+

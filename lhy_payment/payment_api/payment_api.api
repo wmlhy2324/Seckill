@@ -1,0 +1,25 @@
+syntax = "v1"
+
+info (
+	title:   "type title here"
+	desc:    "type desc here"
+	author:  "type author here"
+	email:   "type email here"
+	version: "type version here"
+)
+
+type PayRequest {
+	UserId  int32
+	OrderId int32
+}
+
+type PayResponse {
+	Account float64
+	Msg     string
+}
+
+service Pay {
+	@handler Payment
+	post /api/pay/order (PayRequest) returns (PayResponse)
+} //goctl api go -api payment_api.api -dir . --home ../../template
+

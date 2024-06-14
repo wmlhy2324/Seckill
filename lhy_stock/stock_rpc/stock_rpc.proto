@@ -1,0 +1,16 @@
+syntax = "proto3";
+package stock_rpc;
+option go_package = "./stock_rpc";
+
+message ReduceInventoryRequest{
+  int32 item_id=1;
+}
+
+message  ReduceInventoryResponse{
+  string msg=1;
+}
+
+service stock {
+  rpc ReduceInventory(ReduceInventoryRequest) returns (ReduceInventoryResponse);
+  rpc ReduceInventoryRollBack(ReduceInventoryRequest) returns (ReduceInventoryResponse);
+}//goctl rpc protoc stock_rpc.proto --go_out=./types --go-grpc_out=./types --zrpc_out=.

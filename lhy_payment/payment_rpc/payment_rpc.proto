@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package payment_rpc;
+option go_package = "./payment_rpc";
+
+message DeductAccountRequest{
+  int32 user_id =1;
+  int32 order_id =2 ;
+}
+message DeductAccountResponse{
+  float account =1 ;
+}
+service payment {
+    rpc DeductAccount(DeductAccountRequest) returns (DeductAccountResponse);
+}//goctl rpc protoc payment_rpc.proto --go_out=./types --go-grpc_out=./types --zrpc_out=.

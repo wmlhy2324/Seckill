@@ -1,0 +1,39 @@
+Name: order-mq
+Host: 0.0.0.0
+Port: 3001
+Mode: dev
+
+#监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4003
+  Path: /metrics
+
+#链路追踪
+Telemetry:
+  Name: order-mq
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+
+PutOrderConf:
+  Name: PutOrder
+  Brokers:
+    - 127.0.0.1:9092
+  Group: put-order-group
+  Topic: put-order-topic
+  Offset: first
+  Consumers: 1
+  Processors: 1
+
+Redis:
+  Addr: 127.0.0.1:6379
+  Password:
+  DB: 0
+OrderRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: orderrpc.rpc
+Mysql:
+  DataSource: root:112304@tcp(127.0.0.1:3306)/seckill_db?charset=utf8mb4&parseTime=True&loc=Local

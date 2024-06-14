@@ -1,0 +1,55 @@
+type LoginRequest {
+	Username string `json:"userName"`
+	Password string `json:"password"`
+}
+
+type LoginResponse {
+	Token string `json:"token"`
+}
+
+type AuthenticationRequest {
+	Token     string `header:"Token,optional"`
+	ValidPath string `header:"ValidPath,optional"`
+}
+
+type AuthenticationResponse {
+	UserID int64 `json:"userID"`
+	Role   int   `json:"role"`
+}
+
+type CreateRequest {
+	Nickname string `json:"nickName"`
+	Password string `json:"password"`
+}
+
+type CreateResponse {
+	ID       int64  `json:"id"`
+	Nickname string `json:"nickName"`
+	Role     int    `json:"role"`
+}
+
+type CreateManagerRequest {
+	Nickname string `json:"nickName"`
+	Password string `json:"password"`
+}
+
+type CreateManagerResponse {
+	ID       int64  `json:"id"`
+	Nickname string `json:"nickName"`
+	Role     int    `json:"role"`
+}
+
+service auth {
+	@handler login
+	post /api/auth/login (LoginRequest) returns (LoginResponse)
+
+	@handler authentication
+	post /api/auth/authentication (AuthenticationRequest) returns (AuthenticationResponse)
+
+	@handler create
+	post /api/auth/create (CreateRequest) returns (CreateResponse)
+
+	@handler admin //管理员创建
+	post /api/auth/admin (CreateManagerRequest) returns (CreateManagerResponse)
+} //goctl api go -api auth_api.api -dir . --home ../../template
+

@@ -1,0 +1,39 @@
+syntax = "v1"
+
+info (
+	title:   "type title here"
+	desc:    "type desc here"
+	author:  "type author here"
+	email:   "type email here"
+	version: "type version here"
+)
+
+type CreateOrderRequest {
+	Token string `header:"token"`
+}
+
+type CreateOrderResponse {
+	Price      float32 `json:"price"`
+	UserId     int32   `json:"user_id"`
+	OrderId    int32   `json:"order_id"`
+	CreateTime int64   `json:"create_time"`
+}
+
+type CreateSeckillRequest {
+	Token  string `header:"token"`
+	ItemId int32  `json:"item_id"`
+}
+
+type CreateSeckillOrderResponse {
+	Price  float32 `json:"price"`
+	UserId int32   `json:"user_id"`
+}
+
+service Order {
+	@handler CreateOrder
+	post /api/order/item (CreateOrderRequest) returns (CreateOrderResponse)
+
+	@handler CreateSeckillOrder
+	post /api/order/seckillitem (CreateSeckillRequest) returns (CreateSeckillOrderResponse)
+} //goctl api go -api order_api.api -dir . --home ../../template
+

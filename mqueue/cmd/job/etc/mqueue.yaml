@@ -1,0 +1,31 @@
+Name: mqueue-job
+Host: 0.0.0.0
+Port: 3002
+Mode: dev
+
+#监控
+Prometheus:
+  Host: 0.0.0.0
+  Port: 4010
+  Path: /metrics
+#link Tracking
+Telemetry:
+  Name: mqueue-job
+  Endpoint: http://jaeger:14268/api/traces
+  Sampler: 1.0
+  Batcher: jaeger
+Redis:
+  Addr: 127.0.0.1:6379
+  Password:
+  DB: 0
+  Type: node
+OrderRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: orderrpc.rpc
+CartRpc:
+  Etcd:
+    Hosts:
+      - 127.0.0.1:2379
+    Key: cartrpc.rpc

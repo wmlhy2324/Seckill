@@ -1,0 +1,50 @@
+syntax = "proto3";
+
+package cart_rpc;
+option go_package = "./cart_rpc";
+message CreateCartRequest {
+    int32 user_id = 1;
+}
+message CartResponse {
+    int32 cart_id = 1;
+    string message = 2;
+}
+message AddItemRequest{
+    int32 cart_id = 1;
+    string ItemName = 2;
+    int32 Num = 3;
+    int32 Price = 4;
+    string Description = 5;
+
+}
+message AddItemResponse{
+    int32 cart_id = 1;
+    string message = 2;
+}
+message GetCartDetailRequest{
+    int32 user_id = 1;
+}
+message GetCartDetailResponse{
+    float Price = 1;
+    float Num = 2;
+    bytes data = 3;
+}
+message ReduceInventoryRequest{
+    int32 item_id=1;
+}
+message IncreaseInventoryRequest{
+    int32 item_id=1;
+}
+message  ReduceInventoryResponse{
+  string msg=1;
+}
+message IncreaseInventoryResponse{
+string  msg =1;
+}
+service Cart {
+    rpc CreateCart(CreateCartRequest) returns (CartResponse);
+    rpc AddItem(AddItemRequest) returns (AddItemResponse);
+    rpc GetCartDetail(GetCartDetailRequest) returns (GetCartDetailResponse);
+    rpc ReduceInventory(ReduceInventoryRequest) returns (ReduceInventoryResponse);
+    rpc IncreaseInventory(IncreaseInventoryRequest) returns (IncreaseInventoryResponse);
+}// goctl rpc protoc cart_rpc.proto --go_out=./types --go-grpc_out=./types --zrpc_out=.
